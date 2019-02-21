@@ -12,7 +12,6 @@ should be stored in the current directory with file name config.json.
 """
 
 import json
-import os
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
@@ -129,8 +128,8 @@ class SimpleBoxClient:
         # This function takes the access token and returns a JSON list
         # of all the folders and files available in the folder
         request = Request(
-            'https://api.box.com/2.0/folders/{0}/items?limit={1}&offset={2}'.format(
-                folder_id, limit, offset), None, self.header)
+            'https://api.box.com/2.0/folders/{0}/items?limit={1}&offset={2}'
+            .format(folder_id, limit, offset), None, self.header)
         response = urlopen(request).read()
         response_dict = json.loads(response)
         total_count = response_dict["total_count"]
@@ -228,7 +227,8 @@ class SimpleBoxClient:
         # write file data
         buffer.write(boundary)
         buffer.write('Content-Disposition: form-data; name="file"; '
-                     'filename={0}\r\n'.format(display_file_name).encode('utf-8'))
+                     'filename={0}\r\n'
+                     .format(display_file_name).encode('utf-8'))
         buffer.write('Content-Type: {0}\r\n'.format(mimetype).encode('utf-8'))
         buffer.write(b'\r\n')
         buffer.write(f_content)
